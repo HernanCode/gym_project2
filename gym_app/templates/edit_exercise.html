@@ -1,0 +1,28 @@
+{% extends 'base2.html' %} 
+{% block title %}Editar Ejercicio - GymApp{% endblock %}
+
+{% block title_menu %}Ejercicios{% endblock %}
+
+{% block content %}
+<div class="mt-8 bg-white rounded-lg shadow p-6">
+    <h2 class="text-xl font-bold mb-4">Editar Ejercicio</h2>
+    <form class="space-y-4" method="POST" action="{% url 'edit_exercise' exercise.id %}">
+        {% csrf_token %}
+        {% for field in form %}
+        <div>
+            <label class="block text-sm font-medium text-gray-700">{{ field.label }}</label>
+            {{ field }}
+            {% for error in field.errors %}
+                <p class="text-red-600 text-sm">{{ error }}</p>
+            {% endfor %}
+        </div>
+        {% endfor %}
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">
+            Guardar Cambios
+        </button>
+        <a href="{% url 'exercises_list' %}" class="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">
+            Cancelar
+        </a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'base2.html' %} {% block title %}Iniciar Sessió - GymApp{% endblock %} 
+
+{% block title_menu %}Rutinas{% endblock %}
+
+{% block content %}
+    <main class="p-6">
+        <div class="mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-blue-50 rounded-lg p-6">
+                    <div class="text-4xl font-bold text-blue-600">{{routines.count}}</div>
+                    <div class="text-sm text-gray-600 mt-2">Rutinas Activas</div>
+                </div>
+                <div class="bg-green-50 rounded-lg p-6">
+                    <div class="text-4xl font-bold text-green-600">245</div>
+                    <div class="text-sm text-gray-600 mt-2">Sesiones Completadas</div>
+                </div>
+                <div class="bg-purple-50 rounded-lg p-6">
+                    <div class="text-4xl font-bold text-purple-600">98%</div>
+                    <div class="text-sm text-gray-600 mt-2">Satisfacción Clientes</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for routine in routines%}
+            <!-- Tarjeta de Rutina 1 -->
+            <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                <div class="p-6">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-xl font-semibold text-gray-900">{{routine.name}}</h3>
+                        <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">{{routine.duration}} min</span>
+                    </div>
+                    <p class="mt-2 text-gray-600 text-sm">{{routine.description}}</p>
+                    <div class="mt-4">
+                        <h4 class="text-sm font-medium text-gray-700">Ejercicios:</h4>
+                        <ul class="mt-2 text-sm text-gray-600">
+                            {% for exercise in routine.routineexercise_set.all %}
+                            <li>• {{exercise.exercise.name}} ({{exercise.duration}})</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="mt-6 flex justify-end space-x-3">
+                        <a href="{% url 'edit_routine' routine.id %}">
+                            <button class="text-gray-600 hover:text-gray-800">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                                </svg>
+                            </button>
+                        </a>
+                        <a href="{% url 'delete_routine' routine.id %}">
+                            <button class="text-red-600 hover:text-red-800">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                </svg>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <!-- Botón flotante de nueva rutina -->
+        <div class="fixed bottom-8 right-8">
+            <a href="{% url 'new_routine' %}" class="flex items-center px-6 py-3 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-colors">
+                <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                Nueva Rutina
+            </a>
+        </div>
+    </main>
+
+{% endblock %}

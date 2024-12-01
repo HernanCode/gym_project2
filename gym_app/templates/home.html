@@ -1,0 +1,75 @@
+
+{% extends 'base2.html' %} 
+{% load custom_tags %}
+{% block title %}Gym - Dashboard{% endblock %} {% block content %}
+
+<div class="bg-white rounded-lg shadow p-6 mb-6">
+    <h2 class="text-3xl font-bold mb-4">¡Bienvenido, {{ user.first_name }}!</h2>
+    <p class="text-gray-600 mb-6">Administra la planificació del gimnasio en este panel</p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-blue-100 p-6 rounded-lg">
+            <h3 class="text-xl font-semibold mb-2">Clientes Activos</h3>
+            <p class="text-4xl font-bold text-blue-600">42</p>
+        </div>
+        <div class="bg-green-100 p-6 rounded-lg">
+            <h3 class="text-xl font-semibold mb-2">Clases Hoy</h3>
+            <p class="text-4xl font-bold text-green-600">8</p>
+        </div>
+        <div class="bg-purple-100 p-6 rounded-lg">
+            <h3 class="text-xl font-semibold mb-2">Nuevos Registros</h3>
+            <p class="text-4xl font-bold text-purple-600">5</p>
+        </div>
+    </div>
+</div>
+<form method="POST" action="{% url 'home' %}">
+    {% csrf_token %}
+    <div class="bg-white rounded-lg shadow overflow-x-auto">
+        <table class="min-w-full">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hora</th>
+                    {% for day in days_of_week %}
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ day }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% for row in week_schedule %}
+                    <tr>
+                        <!-- Primera columna con la hora -->
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ row.hour }}:00</td>
+
+                        <!-- Columnas para cada día -->
+                        {% for day in days_of_week %}
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            {% if row|get_item:day %}
+                                {{ row|get_item:day }}
+                                <a href="{% url 'delete_schedule' schedule_id=row|get_id:day %}">
+                                    <button type="button" class="text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 p-2 rounded-full">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+                                </a>
+
+                            {% else %}
+                                <select name="{{ day }}_{{ row.hour }}" class="form-select mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <option value="">Selecciona una rutina</option>
+                                    {% for routine in routines %}
+                                        <option value="{{ routine.id }}">{{ routine.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            {% endif %}
+                        </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">
+        Guardar Cambios
+    </button>
+</form>
+{% endblock %}
