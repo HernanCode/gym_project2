@@ -11,6 +11,14 @@ class User(AbstractUser):
     ]
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='user')
+    PLAN_CHOICES = [
+        ('no_plan', 'Sin Plan'),
+        ('basic', 'Plan Básico'),
+        ('standard', 'Plan Estándar'),
+        ('premium', 'Plan Premium'),
+    ]
+    
+    plan = models.CharField(max_length=20, choices=PLAN_CHOICES, default='no_plan')
 
     class Meta:
         db_table = 'users'
@@ -105,7 +113,8 @@ class Schedule(models.Model):
     )
     routine = models.ForeignKey('Routine', on_delete=models.CASCADE, null=True, blank=True)
     trainer = models.ForeignKey(User, on_delete=models.CASCADE)
-
+    max_enrolls = models.IntegerField(default=10)
+    enrollments = models.ManyToManyField(User, related_name="schedules", blank=True)
     def __str__(self):
         return f"{self.routine}"
     @property 

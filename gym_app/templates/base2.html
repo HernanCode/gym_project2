@@ -24,19 +24,19 @@
                 </button>
             </div>
             <nav id="sidebar-menu" class="hidden md:block mt-4">
-                <a href="{% url 'home' %}" class="flex items-center px-4 py-3 hover:bg-gray-700 transition-colors">
+                <a href="{% url 'gym_app:home' %}" class="flex items-center px-4 py-3 hover:bg-gray-700 transition-colors">
                     <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
                 </a>
-                <a href="{% url 'edit_profile' %}" class="flex items-center px-4 py-3 hover:bg-gray-700 transition-colors">
+                <a href="{% url 'gym_app:edit_profile' %}" class="flex items-center px-4 py-3 hover:bg-gray-700 transition-colors">
                     <i class="fas fa-user-edit mr-3"></i> Editar perfil
                 </a>
-                <a href="{% url 'routines_list' %}" class="flex items-center px-4 py-3 hover:bg-gray-700 transition-colors">
+                <a href="{% url 'gym_app:routines_list' %}" class="flex items-center px-4 py-3 hover:bg-gray-700 transition-colors">
                     <i class="fas fa-person-running mr-3"></i> Rutinas
                 </a>
-                <a href="{% url 'exercises_list' %}" class="flex items-center px-4 py-3 hover:bg-gray-700 transition-colors">
+                <a href="{% url 'gym_app:exercises_list' %}" class="flex items-center px-4 py-3 hover:bg-gray-700 transition-colors">
                     <i class="fas fa-dumbbell mr-3"></i> Ejercicios
                 </a>
-                <a href="{% url 'logout' %}" class="flex items-center px-4 py-3 hover:bg-gray-700 transition-colors">
+                <a href="{% url 'gym_app:logout' %}" class="flex items-center px-4 py-3 hover:bg-gray-700 transition-colors">
                     <i class="fas fa-sign-out mr-3"></i> Cerrar sesión
                 </a>
             </nav>

@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {%endblock%}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+    <div class="min-h-screen">
+        <!-- Navigation -->
+        <nav class="bg-gray-800 text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <h1 class="text-xl font-bold">GymPro</h1>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <a href="{% url 'gym_workouts:plan'%}" class="text-gray-300 hover:text-white">Mi plan</a>
+                        <a href="{% url 'gym_workouts:home'%}" class="text-gray-300 hover:text-white">Planificacion</a>
+                        <a href="{% url 'gym_app:logout'%}" class="text-gray-300 hover:text-white">Cerrar Sesión</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        {% if messages %}
+        {% for message in messages %}
+            <div class="message-alert flex items-center p-4 mb-4 text-sm 
+                {% if message.tags == 'danger' %}
+                    text-red-800 border-red-300 bg-red-50
+                {% elif message.tags == 'success' %}
+                    text-green-800 border-green-300 bg-green-50
+                {% elif message.tags == 'warning' %}
+                    text-yellow-800 border-yellow-300 bg-yellow-50
+                {% endif %}
+                rounded-lg" role="alert">
+                
+                <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                </svg>
+                <span class="sr-only">{{ message.tags|capfirst }}</span>
+                <div>
+                    <span class="font-weight-700">{{ message }}</span>
+                </div>
+                <button class="close-message ml-auto">&times;</button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Desaparecer mensajes automáticamente después de 5 segundos
+        const messages = document.querySelectorAll('.message-alert');
+        messages.forEach(message => {
+            setTimeout(() => {
+                message.classList.add('opacity-0', 'transition-opacity', 'duration-500');
+                setTimeout(() => message.remove(), 500);
+            }, 5000);
+        });
+    
+        // Cerrar mensajes manualmente
+        document.querySelectorAll('.close-message').forEach(closeBtn => {
+            closeBtn.addEventListener('click', function() {
+                const message = this.closest('.message-alert');
+                message.classList.add('opacity-0', 'transition-opacity', 'duration-500');
+                setTimeout(() => message.remove(), 500);
+            });
+        });
+    });
+    </script>
+    {% block content %} {%endblock%}
+    </body>
+</html>

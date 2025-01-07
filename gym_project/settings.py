@@ -46,7 +46,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gym_app',
-    'widget_tweaks'
+    'widget_tweaks',
+    'gym_workouts',
+    'gym_main'
 ]
 
 # DATABASES = {
@@ -80,6 +82,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
+        
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

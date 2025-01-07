@@ -1,0 +1,143 @@
+{% extends 'base.html' %} 
+{% block title %}Mi plan{% endblock %} 
+
+{% block content %}
+<!-- Main Content -->
+<main class="py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-extrabold text-gray-900 mb-4">Elige tu Plan de Entrenamiento</h2>
+            <p class="text-xl text-gray-600">Selecciona el plan que mejor se adapte a tus objetivos</p>
+        </div>
+
+        <form class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16" method="POST">
+            {% csrf_token %}
+            <!-- Plan Básico -->
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden transform transition-transform hover:scale-105">
+                <div class="p-8">
+                    <div class="bg-blue-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-center mt-4">Plan Básico</h3>
+                    <p class="text-gray-600 text-center mt-2">Perfecto para comenzar</p>
+                    <div class="text-center mt-6">
+                        <span class="text-4xl font-bold">15€</span>
+                        <span class="text-gray-600">/mes</span>
+                    </div>
+                    <ul class="mt-8 space-y-4">
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            1 rutina semanal
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Seguimiento básico
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Acceso a la app
+                        </li>
+                    </ul>
+                    <div class="flex items-center justify-center mt-8">
+                        <input type="radio" name="plan" value="basic" class="w-5 h-5 text-blue-500 focus:ring-blue-500">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Plan Estándar -->
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden transform transition-transform hover:scale-105">
+                <div class="p-8">
+                    <div class="bg-purple-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-center mt-4">Plan Estándar</h3>
+                    <p class="text-gray-600 text-center mt-2">El más popular</p>
+                    <div class="text-center mt-6">
+                        <span class="text-4xl font-bold">30€</span>
+                        <span class="text-gray-600">/mes</span>
+                    </div>
+                    <ul class="mt-8 space-y-4">
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            3 rutinas semanales
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Seguimiento personalizado
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Acceso completo a la app
+                        </li>
+                    </ul>
+                    <div class="flex items-center justify-center mt-8">
+                        <input type="radio" name="plan" value="standard" class="w-5 h-5 text-purple-500 focus:ring-purple-500">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Plan Premium -->
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden transform transition-transform hover:scale-105">
+                <div class="p-8">
+                    <div class="bg-green-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-center mt-4">Plan Premium</h3>
+                    <p class="text-gray-600 text-center mt-2">Máxima flexibilidad</p>
+                    <div class="text-center mt-6">
+                        <span class="text-4xl font-bold">50€</span>
+                        <span class="text-gray-600">/mes</span>
+                    </div>
+                    <ul class="mt-8 space-y-4">
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Rutinas ilimitadas
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Seguimiento prioritario
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Acceso VIP a contenido
+                        </li>
+                    </ul>
+                    <div class="flex items-center justify-center mt-8">
+                        <input type="radio" name="plan" value="premium" class="w-5 h-5 text-green-500 focus:ring-green-500">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-12">
+            <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                Confirmar Plan Seleccionado
+            </button>
+        </div>
+    </form>
+</main>
+{% endblock %}

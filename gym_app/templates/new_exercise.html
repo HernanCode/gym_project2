@@ -5,7 +5,7 @@
 {% block content %}
 <div class="mt-8 bg-white rounded-lg shadow p-6">
     <h2 class="text-xl font-bold mb-4">Añadir Nuevo Ejercicio</h2>
-    <form class="space-y-4" method="POST" action="{% url 'new_exercise' %}">
+    <form class="space-y-4" method="POST" action="{% url 'gym_app:new_exercise' %}">
         {% csrf_token %}
         {% for field in form %}
         <div>

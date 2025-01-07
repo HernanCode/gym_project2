@@ -5,67 +5,6 @@ from django.contrib import messages
 from .forms import UserRegistrationForm, UserLoginForm, EditProfileForm, RoutineForm,ScheduleForm, ExerciseForm
 from .models import Routine, RoutineExercise,Exercise,Schedule
 from django.contrib.auth.models import User
-def register(request):
-    """
-    Vista que maneja el registro de un nuevo usuario.
-    
-    Si la solicitud es un POST, valida el formulario de registro. Si es válido, guarda al usuario,
-    inicia sesión y redirige a la página principal con un mensaje de éxito.
-    Si la solicitud es GET, muestra un formulario vacío de registro.
-
-    Args:
-        request: La solicitud HTTP recibida.
-
-    Returns:
-        render: Renderiza la plantilla 'register.html' con el formulario de registro.
-    """
-    if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, 'Registre completat amb èxit!')
-            return redirect('home')
-    else:
-        form = UserRegistrationForm()
-    return render(request, 'register.html', {'form': form})
-
-def user_login(request):
-    """
-    Vista que maneja el inicio de sesión de un usuario existente.
-    
-    Si la solicitud es un POST, autentica al usuario usando el email y la contraseña proporcionados.
-    Si las credenciales son correctas, inicia sesión y redirige a la página principal con un mensaje de éxito.
-    Si las credenciales son incorrectas, muestra un mensaje de error.
-    Si la solicitud es GET, muestra el formulario de inicio de sesión vacío.
-
-    Args:
-        request: La solicitud HTTP recibida.
-
-    Returns:
-        render: Renderiza la plantilla 'login.html' con el formulario de inicio de sesión.
-    """
-    if request.method == 'POST':
-        form = UserLoginForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data.get('email')
-            password = form.cleaned_data.get('password')
-            user = authenticate(request, email=email, password=password)
-            if user is not None:
-                login(request, user)
-                messages.success(request, 'Has iniciat sessió correctament!')
-                return redirect('home')
-            else:
-                messages.error(request, 'ERROR: Credencials incorrectes.')
-    else:
-        form = UserLoginForm()
-    return render(request, 'login.html', {'form': form})
-
-# views.py
-
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .models import Schedule, Routine
 
 def home(request):
     # Días de la semana y horas
@@ -85,7 +24,7 @@ def home(request):
             schedule_entry = schedules.filter(day=day, hour=hour).first()
             row[day] = schedule_entry if schedule_entry and schedule_entry.routine else None
         week_schedule.append(row)
-
+    
     # Manejar POST request
     if request.method == 'POST':
 
@@ -107,51 +46,13 @@ def home(request):
                         messages.error(request, f'Error al procesar la rutina para {day} a las {hour}:00')
         
         messages.success(request, 'Horario actualizado exitosamente')
-        return redirect('home')
+        return redirect('gym_app:home')
     return render(request, 'home.html', {
         'week_schedule': week_schedule,
         'days_of_week': days_of_week,
         'hours': hours,
         'routines': routines
     })
-
-
-def delete_schedule(request, schedule_id):
-    print(schedule_id)
-    """
-    Vista que maneja la eliminación de un horario existente.
-
-    Si la solicitud es un POST, elimina el horario con el ID proporcionado y redirige a la página principal con un mensaje de éxito.
-    Si la solicitud es GET, muestra una confirmación de eliminación.
-
-    Args:
-        request: La solicitud HTTP recibida.
-        schedule_id: El ID del horario a eliminar.
-
-    Returns:
-        render: Renderiza la plantilla 'delete_schedule.html' si es un GET, o redirige a la página principal si es un POST.
-    """
-    schedule = get_object_or_404(Schedule, id=schedule_id)
-    schedule.delete()
-    messages.success(request, 'Horario eliminado exitosamente.')
-    return redirect('home')
-
-    return render(request, 'delete_schedule.html', {'schedule': schedule})
-
-def logout_view(request):
-    """
-    Vista que maneja el cierre de sesión de un usuario.
-    
-    Al hacer logout, se redirige al usuario a la página de inicio.
-
-    Args:
-        request: La solicitud HTTP recibida.
-
-    Returns:
-        redirect: Redirige a la vista 'home' después de hacer logout.
-    """
-    logout(request)
-    return redirect('home')
 
 @login_required
 def edit_profile(request):
@@ -175,11 +76,33 @@ def edit_profile(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Tu perfil ha sido actualizado con éxito.')
-            return redirect('home')  
+            return redirect('gym_app:home')  
     else:
         form = EditProfileForm(instance=user)
 
     return render(request, 'edit_profile.html', {'form': form})
+
+def delete_schedule(request, schedule_id):
+    print(schedule_id)
+    """
+    Vista que maneja la eliminación de un horario existente.
+
+    Si la solicitud es un POST, elimina el horario con el ID proporcionado y redirige a la página principal con un mensaje de éxito.
+    Si la solicitud es GET, muestra una confirmación de eliminación.
+
+    Args:
+        request: La solicitud HTTP recibida.
+        schedule_id: El ID del horario a eliminar.
+
+    Returns:
+        render: Renderiza la plantilla 'delete_schedule.html' si es un GET, o redirige a la página principal si es un POST.
+    """
+    schedule = get_object_or_404(Schedule, id=schedule_id)
+    schedule.delete()
+    messages.success(request, 'Horario eliminado exitosamente.')
+    return redirect('gym_app:home')
+
+    return render(request, 'delete_schedule.html', {'schedule': schedule})
 
 def new_routine(request):
     if request.method == 'POST':
@@ -207,7 +130,7 @@ def new_routine(request):
                     exercise=exercise,
                     duration=series_repetitions  # Guarda las series/repeticiones
                 )
-            return redirect('routines_list') 
+            return redirect('gym_app:routines_list') 
             # return redirect('adjust_exercises', routine_id=routine.id)
         else:
             # Si el formulario no es válido, renderiza de nuevo con los errores
@@ -254,7 +177,7 @@ def edit_routine(request, routine_id):
                     duration=series_repetitions  # Guarda las series/repeticiones
                 )
             
-            return redirect('routines_list')  # Redirige a la lista de rutinas después de guardar
+            return redirect('gym_app:routines_list')  # Redirige a la lista de rutinas después de guardar
     else:
         form = RoutineForm(instance=routine)
 
@@ -268,7 +191,7 @@ def delete_routine (request, routine_id):
     routine = get_object_or_404(Routine, id=routine_id)  
     routine.delete()
     messages.success(request, 'Rutina eliminada correctamente.')
-    return redirect('routines_list')  
+    return redirect('gym_app:routines_list')  
 
 
 def schedule_view(request):
@@ -292,7 +215,7 @@ def new_exercise(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Ejercicio creado correctamente.')
-            return redirect('exercises_list')
+            return redirect('gym_app:exercises_list')
     else:
         form = ExerciseForm()
 
@@ -305,7 +228,7 @@ def edit_exercise(request, exercise_id):
         if form.is_valid():
             form.save()
             messages.success(request, 'Ejercicio actualizado correctamente.')
-            return redirect('exercises_list')  # Redirigir a la lista de ejercicios
+            return redirect('gym_app:exercises_list')  # Redirigir a la lista de ejercicios
     else:
         form = ExerciseForm(instance=exercise)  # Prellenar el formulario con los datos actuales
 
@@ -315,4 +238,23 @@ def delete_exercise(request, exercise_id):
     exercise = get_object_or_404(Exercise, id=exercise_id)  
     exercise.delete()
     messages.success(request, 'Ejercicio eliminado correctamente.')
-    return redirect('exercises_list')  
+    return redirect('gym_app:exercises_list')  
+
+
+
+
+
+def logout_view(request):
+    """
+    Vista que maneja el cierre de sesión de un usuario.
+    
+    Al hacer logout, se redirige al usuario a la página de inicio.
+
+    Args:
+        request: La solicitud HTTP recibida.
+
+    Returns:
+        redirect: Redirige a la vista 'home' después de hacer logout.
+    """
+    logout(request)
+    return redirect('gym_main:main_page')

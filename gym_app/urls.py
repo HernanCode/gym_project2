@@ -3,13 +3,13 @@ from . import views
 from django.contrib.auth import views as auth_views
 from django.contrib import admin
 from django.contrib.auth.views import LogoutView
+
+app_name = 'gym_app'
 urlpatterns = [
-    path('', views.home, name='home'),
-    path('register/', views.register, name='register'),
-    path('login/', views.user_login, name='login'),
-    path('logout/', views.logout_view, name='logout'),
+    path('',views.home, name="home"),
+    path('profile/', views.edit_profile, name="edit_profile"),
     path('admin/', admin.site.urls),
-    path('edit-profile/', views.edit_profile, name='edit_profile'),
+    path('logout/', views.logout_view, name='logout'),
     path('schedule/', views.schedule_view, name='schedule_view'),
     path('routines/', views.routines_list, name='routines_list'),
     path('routines/new', views.new_routine, name='new_routine'),

@@ -1,0 +1,242 @@
+<html><head><base href=""><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>GymPro - Calendario de Clases</title>
+    <style>
+        .reservas-container {
+            height: 600px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #CBD5E0 #EDF2F7;
+        }
+        
+        .reservas-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .reservas-container::-webkit-scrollbar-track {
+            background: #EDF2F7;
+            border-radius: 4px;
+        }
+        
+        .reservas-container::-webkit-scrollbar-thumb {
+            background-color: #CBD5E0;
+            border-radius: 4px;
+        }
+    
+        .clase-reservada {
+            background-color: #10B981 !important;
+            color: white;
+        }
+    
+        .clase-reservada .text-sm {
+            color: white !important;
+        }
+    </style>
+    </head><body class="bg-gray-100">
+    
+    <div class="min-h-screen">
+        <!-- Navigation -->
+        <nav class="bg-gray-800 text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <h1 class="text-xl font-bold">GymPro</h1>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <a href="https://ejemplo.com/perfil" class="text-gray-300 hover:text-white">Mi Perfil</a>
+                        <a href="https://ejemplo.com/rutinas" class="text-gray-300 hover:text-white">Mis Rutinas</a>
+                        <a href="https://ejemplo.com/calendario" class="text-gray-300 hover:text-white">Calendario</a>
+                        <a href="https://ejemplo.com/logout" class="text-gray-300 hover:text-white">Cerrar Sesión</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    
+        <!-- Main Content -->
+        <main class="py-12 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-extrabold text-gray-900 mb-4">Calendario de Clases</h2>
+                    <p class="text-xl text-gray-600">Reserva tu plaza en las próximas clases de esta semana</p>
+                </div>
+    
+                <!-- Calendar and Classes Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Static Calendar -->
+                    <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-lg overflow-x-auto">
+                        <table class="min-w-full">
+                            <thead>
+                                <tr>
+                                    <th class="px-4 py-2 border">Hora</th>
+                                    <th class="px-4 py-2 border">Lunes</th>
+                                    <th class="px-4 py-2 border">Martes</th>
+                                    <th class="px-4 py-2 border">Miércoles</th>
+                                    <th class="px-4 py-2 border">Jueves</th>
+                                    <th class="px-4 py-2 border">Viernes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="border px-4 py-2 font-semibold">16:00</td>
+                                    <td class="border px-4 py-2">
+                                        <div class="bg-blue-100 p-2 rounded cursor-pointer hover:bg-blue-200" data-clase="Crossfit" data-dia="Lunes" data-hora="16:00" onclick="toggleReserva(this)">
+                                            Crossfit
+                                            <div class="text-sm text-blue-600">8/12 plazas</div>
+                                            <button class="hidden mt-2 bg-red-500 text-white px-2 py-1 rounded text-sm cancelar-btn">
+                                                Cancelar reserva
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td class="border px-4 py-2">
+                                        <div class="bg-red-100 p-2 rounded cursor-pointer hover:bg-red-200" data-clase="Spinning" data-dia="Martes" data-hora="16:00" onclick="toggleReserva(this)">
+                                            Spinning
+                                            <div class="text-sm text-red-600">20/20 plazas</div>
+                                            <button class="hidden mt-2 bg-red-500 text-white px-2 py-1 rounded text-sm cancelar-btn">
+                                                Cancelar reserva
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td class="border px-4 py-2"></td>
+                                    <td class="border px-4 py-2">
+                                        <div class="bg-green-100 p-2 rounded cursor-pointer hover:bg-green-200" data-clase="HIIT" data-dia="Jueves" data-hora="16:00" onclick="toggleReserva(this)">
+                                            HIIT
+                                            <div class="text-sm text-green-600">5/15 plazas</div>
+                                            <button class="hidden mt-2 bg-red-500 text-white px-2 py-1 rounded text-sm cancelar-btn">
+                                                Cancelar reserva
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td class="border px-4 py-2"></td>
+                                </tr>
+                                <!-- Repeat for other time slots with similar structure -->
+                                <tr>
+                                    <td class="border px-4 py-2 font-semibold">17:30</td>
+                                    <td class="border px-4 py-2">
+                                        <div class="bg-purple-100 p-2 rounded cursor-pointer hover:bg-purple-200" data-clase="Yoga" data-dia="Lunes" data-hora="17:30" onclick="toggleReserva(this)">
+                                            Yoga
+                                            <div class="text-sm text-purple-600">11/15 plazas</div>
+                                            <button class="hidden mt-2 bg-red-500 text-white px-2 py-1 rounded text-sm cancelar-btn">
+                                                Cancelar reserva
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td class="border px-4 py-2"></td>
+                                    <td class="border px-4 py-2">
+                                        <div class="bg-yellow-100 p-2 rounded cursor-pointer hover:bg-yellow-200" data-clase="Pilates" data-dia="Miércoles" data-hora="17:30" onclick="toggleReserva(this)">
+                                            Pilates
+                                            <div class="text-sm text-yellow-600">7/10 plazas</div>
+                                            <button class="hidden mt-2 bg-red-500 text-white px-2 py-1 rounded text-sm cancelar-btn">
+                                                Cancelar reserva
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td class="border px-4 py-2"></td>
+                                    <td class="border px-4 py-2">
+                                        <div class="bg-indigo-100 p-2 rounded cursor-pointer hover:bg-indigo-200" data-clase="Zumba" data-dia="Viernes" data-hora="17:30" onclick="toggleReserva(this)">
+                                            Zumba
+                                            <div class="text-sm text-indigo-600">12/20 plazas</div>
+                                            <button class="hidden mt-2 bg-red-500 text-white px-2 py-1 rounded text-sm cancelar-btn">
+                                                Cancelar reserva
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="border px-4 py-2 font-semibold">19:00</td>
+                                    <td class="border px-4 py-2"></td>
+                                    <td class="border px-4 py-2">
+                                        <div class="bg-orange-100 p-2 rounded cursor-pointer hover:bg-orange-200" data-clase="Boxeo" data-dia="Martes" data-hora="19:00" onclick="toggleReserva(this)">
+                                            Boxeo
+                                            <div class="text-sm text-orange-600">6/10 plazas</div>
+                                            <button class="hidden mt-2 bg-red-500 text-white px-2 py-1 rounded text-sm cancelar-btn">
+                                                Cancelar reserva
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td class="border px-4 py-2"></td>
+                                    <td class="border px-4 py-2">
+                                        <div class="bg-teal-100 p-2 rounded cursor-pointer hover:bg-teal-200" data-clase="Funcional" data-dia="Jueves" data-hora="19:00" onclick="toggleReserva(this)">
+                                            Funcional
+                                            <div class="text-sm text-teal-600">9/15 plazas</div>
+                                            <button class="hidden mt-2 bg-red-500 text-white px-2 py-1 rounded text-sm cancelar-btn">
+                                                Cancelar reserva
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td class="border px-4 py-2"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+    
+                    <!-- Classes List -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg h-[600px]">
+                        <h3 class="text-xl font-bold mb-4">Mis Reservas</h3>
+                        <div id="misReservas" class="space-y-4 reservas-container">
+                            <!-- Las reservas se añadirán aquí dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white mt-16">
+            <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <p>© 2024 GymPro. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+    function toggleReserva(element) {
+        const isReservada = element.classList.contains('clase-reservada');
+        const clase = element.dataset.clase;
+        const dia = element.dataset.dia;
+        const hora = element.dataset.hora;
+        const cancelarBtn = element.querySelector('.cancelar-btn');
+    
+        if (!isReservada) {
+            // Hacer la reserva
+            element.classList.add('clase-reservada');
+            cancelarBtn.classList.remove('hidden');
+            agregarAMisReservas(clase, dia, hora);
+        }
+    }
+    
+    function agregarAMisReservas(clase, dia, hora) {
+        const reserva = document.createElement('div');
+        reserva.className = 'border rounded-lg p-4 hover:bg-gray-50 transition-colors';
+        reserva.innerHTML = `
+            <div class="flex justify-between items-start">
+                <div>
+                    <h4 class="font-bold">${clase}</h4>
+                    <p class="text-sm text-gray-600">${dia}, ${hora}</p>
+                </div>
+                <button onclick="cancelarReserva('${clase}', '${dia}', '${hora}', this)" class="text-red-500 hover:text-red-700">
+                    Cancelar
+                </button>
+            </div>
+        `;
+        
+        document.getElementById('misReservas').appendChild(reserva);
+    }
+    
+    function cancelarReserva(clase, dia, hora, button) {
+        // Encontrar y actualizar el elemento en el calendario
+        const elementoCalendario = document.querySelector(`[data-clase="${clase}"][data-dia="${dia}"][data-hora="${hora}"]`);
+        if (elementoCalendario) {
+            elementoCalendario.classList.remove('clase-reservada');
+            elementoCalendario.querySelector('.cancelar-btn').classList.add('hidden');
+        }
+        
+        // Eliminar la reserva de la lista
+        button.closest('.border').remove();
+    }
+    </script>
+    
+    </body></html>
